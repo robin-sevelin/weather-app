@@ -24,7 +24,7 @@ function flipCard(this: HTMLElement): void {
 
 // Printa kortleken
 let cardString = '';
-myShuffledCardDeck.forEach((card) => {
+myShuffledCardDeck.forEach(card => {
   cardString += `
     <button class="card">
       <span class="front">♠</span>
@@ -34,6 +34,6 @@ myShuffledCardDeck.forEach((card) => {
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = cardString;
 
-document.querySelectorAll('.card').forEach((card) => {
+document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', flipCard);
 });
