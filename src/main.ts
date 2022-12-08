@@ -1,33 +1,37 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable max-len */
 import './style/style.scss';
 
 /*
 const appElement = document.querySelector('.app');
-const weatherTempElement: number = document.querySelector('.weather-temp');
 const iconElement = document.querySelector('.weather-icon');
 const weatherInfoElement: string = document.querySelector('.weather-info');
 const myPositionElement: string = document.querySelector('.my-position');
 */
 
-const tempElement = document.querySelector('.weather-temp');
+const tempElement: HTMLDivElement = document.querySelector('.weather-temp');
+const appElement: HTMLDivElement = document.querySelector('.app');
+const curretDate = new Date();
 
-const url =
-  'https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/99280/period/latest-hour/data.json';
+if (appElement !== null) {
+  appElement.style.backgroundImage = "url('/background imgs/night-time.jpg')";
+}
+
+const url = 'https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/99280/period/latest-hour/data.json';
 fetch(url)
-  .then(response => {
+  .then((response) => {
     console.log(response);
     return response.json();
   })
-  .then(json => {
+  .then((json) => {
     console.log('Aktuell temperatur:', json.value[0].value, 'grader');
     console.log('Resterande data:');
     console.log(json);
-    tempElement.innerHTML = 'Aktuell temperatur:' + json.value[0].value + 'grader';
+    tempElement.innerHTML = json.value[0].value;
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
   });
+
+console.log(curretDate.getHours());
 
 /*
   {

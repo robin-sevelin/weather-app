@@ -21,7 +21,9 @@
   position: relative;
   top: 100px;
   max-width: 600px;
-  background-color: lightgreen;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -44,6 +46,11 @@
   height: 200px;
   background-color: whitesmoke;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
 }
 
 .weather-info,
