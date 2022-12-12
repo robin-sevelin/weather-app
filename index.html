@@ -8,9 +8,6 @@
   <meta name="description" content="A weather app site">
   <meta name="keywords" content="HTML, CSS, JavaScript, Weather">
   <meta name="author" content="Robin Sevelin">
-
-
-
   <title>Weather App</title>
 </head>
 
@@ -20,13 +17,21 @@
       <div class="h1-container">
         <h1>Väder App</h1>
       </div>
-      <div class="weather-icon" id="weather-icon"></div>
-      <div class="weather-temp" id="weather-temp"></div>
-      <div class="weather-info" id="weather-info"></div>
-      <div class="my-position" id="my-position"></div>
+      <div class="weather-icon" id="weather-icon">
+        <img src="/weather_icons/unknown-weather.png" alt="">
+      </div>
+      <div class="weather-temp" id="weather-temp">
+        <p>- &#176;<span>C</span></p>
+      </div>
+      <div class="weather-info" id="weather-info">
+        <p>Inget väder hittat</p>
+      </div>
+      <div class="my-position" id="my-position">
+        <p>Ingen position hittad</p>
+        <p></p>
+      </div>
     </section>
   </main>
-
   <!-- TODO
     - Validera HTML (kopiera den renderade HTML-koden): https://validator.w3.org/#validate_by_input
     - Kontrollera tillgänglighet: https://www.a11yproject.com/checklist/ & Chrome Lighthouse/Firefox Accessibility Tools

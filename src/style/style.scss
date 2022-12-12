@@ -22,6 +22,7 @@
   top: 100px;
   max-width: 600px;
   background-size: cover;
+  background-color: lightgreen;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 10px;
@@ -35,7 +36,6 @@
 
 .h1-container {
   font-size: 2rem;
-  background-color: whitesmoke;
   padding: 10px;
   border-radius: 10px;
 }
@@ -44,7 +44,6 @@
 .weather-temp {
   width: 200px;
   height: 200px;
-  background-color: whitesmoke;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -55,8 +54,14 @@
 
 .weather-info,
 .my-position {
-  width: 300px;
-  height: 50px;
-  background-color: whitesmoke;
   border-radius: 10px;
+  font-size: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+.app{
+    min-height: 100vh;
+    top: 0;
+    border-radius: 0;
+  }
 }
