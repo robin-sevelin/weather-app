@@ -1,113 +1,59 @@
 import './style/style.scss';
 
-/*
-fetch(API_URL)
-  .then((response) => {
-    console.log(response);
-    return response.json();
-  })
-  .then((json) => {
-    console.log('Aktuell temperatur:', json.value[0].value, 'grader');
-    console.log('Resterande data:');
-    console.log(json);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-*/
+const temp: HTMLDivElement | null = document.querySelector('.weather-temp');
+const myLocation: HTMLDivElement | null = document.querySelector('.weather-location');
+const weatherDescription: HTMLDivElement | null = document.querySelector('.weather-description');
+const weatherIcon: HTMLDivElement | null = document.querySelector('.weather-icon');
+const errorContainer: HTMLDivElement | null = document.querySelector('.error-container');
+const currentDate = new Date();
 
-const tempElement: HTMLDivElement | null = document.querySelector('.weather-temp');
-const myPosition: HTMLDivElement | null = document.querySelector('.my_position');
-const appElement: HTMLDivElement | null = document.querySelector('.app');
-const url = 'https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/99280/period/latest-hour/data.json';
+async function getWeather(latitude: number, longitude: number) {
+  const key = '7c7d19743c1baaccf38fcdc2f6d1682f';
+  const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?id=524901&units=metric&lang=sv&lat=${latitude}&lon=${longitude}&appid=${key}`;
+  console.log(apiUrl);
 
-const findMyPosition = () => {
-  if (myPosition != null) {
-    const success = (position) => {
-      console.log(position);
-    };
-    const error = () => {
-      console.log('error, could not find position');
-    };
-    navigator.geolocation.getCurrentPosition(success, error);
+  await fetch(apiUrl)
+    .then((response) => response.json())
+    .then((json) => {
+      myLocation.innerHTML = `${json.city.name}, ${json.city.country}`;
+      temp.innerHTML = `${json.list[0].main.temp}, &#176;<span>C</span>`;
+      weatherDescription.innerHTML = `${json.list[0].weather[0].description}`;
+      weatherIcon.innerHTML = `<img src="http://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="" width="100" height="100" />`;
+    })
+    .catch((error: string) => {
+      error = 'kunde inte hämta data';
+      if (errorContainer != null) {
+        errorContainer.innerHTML = error;
+      }
+      return null;
+    });
+}
+function showPosition(position: number) {
+  const latitude: number = position.coords;
+  const longitude: number = position.coords;
+  getWeather(latitude, longitude);
+}
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else if (errorContainer != null) {
+    errorContainer.innerHTML = 'kunde inte hämta din position';
   }
-};
-
-function handleData() {
-  const dataResponse = {
-    value: [
-      {
-        date: 1670587200000,
-        value: '-0.6',
-        quality: 'G',
-      },
-    ],
-    updated: 1670587200000,
-    parameter: {
-      key: '1',
-      name: 'Lufttemperatur',
-      summary: 'momentanvärde, 1 gång/tim',
-      unit: 'degree celsius',
-    },
-    station: {
-      key: '99280',
-      name: 'Svenska Högarna A',
-      owner: 'SMHI',
-      ownerCategory: 'CLIMATE',
-      measuringStations: 'CORE',
-      height: 2,
-    },
-    period: {
-      key: 'latest-hour',
-      from: 1670583601000,
-      to: 1670587200000,
-      summary: 'Data från senaste timmen',
-      sampling: 'Ej angivet',
-    },
-    position: [
-      {
-        from: 1275350400000,
-        to: 1670587200000,
-        height: 11.811,
-        latitude: 59.4423,
-        longitude: 19.5022,
-      },
-    ],
-    link: [
-      {
-        rel: 'data',
-        type: 'application/json',
-        href: 'https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/99280/period/latest-hour/data.json',
-      },
-      {
-        rel: 'data',
-        type: 'application/xml',
-        href: 'https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/99280/period/latest-hour/data.xml',
-      },
-      {
-        rel: 'data',
-        type: 'text/plain',
-        href: 'https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/99280/period/latest-hour/data.csv',
-      },
-      {
-        rel: 'period',
-        type: 'application/atom+xml',
-        href: 'https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/99280/period/latest-hour.atom',
-      },
-      {
-        rel: 'iso19139',
-        type: 'application/vnd.iso.19139+xml',
-        href: 'https://opendata-catalog.smhi.se/md/25080190-38ba-4279-a65d-d9ef8d0bf949',
-      },
-      {
-        rel: 'iso19139',
-        type: 'application/vnd.iso.19139+xml',
-        href: 'https://opendata-catalog.smhi.se/md/c6ae10b6-6a18-4e15-9444-fbd746f4609d',
-      },
-    ],
-  };
-  console.log(`${dataResponse.value[0].value} grader celsius`);
 }
 
-handleData();
-findMyPosition();
+function checkDaytime() {
+  if (currentDate.getHours() < 7 || currentDate.getHours() > 20) {
+    if (currentDate.getMonth() > 9 || currentDate.getMonth() < 3) {
+      document.body.style.backgroundImage = 'url(winter-night-time.jpg)';
+    } else {
+      document.body.style.backgroundImage = 'url(night-time.jpg)';
+    }
+  } else if (currentDate.getMonth() < 9 || currentDate.getMonth() > 3) {
+    document.body.style.backgroundImage = 'url(winter-day-time.jpg)';
+  } else {
+    document.body.style.backgroundImage = 'url(day-time.jpg)';
+  }
+}
+
+checkDaytime();
+getLocation();
