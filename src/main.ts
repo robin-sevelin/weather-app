@@ -7,30 +7,31 @@ const weatherIcon: HTMLDivElement | null = document.querySelector('.weather-icon
 const errorContainer: HTMLDivElement | null = document.querySelector('.error-container');
 const currentDate = new Date();
 
-async function getWeather(latitude: number, longitude: number) {
-  const key = '7c7d19743c1baaccf38fcdc2f6d1682f';
+async function getWeather(latitude, longitude) {
+  const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
   const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?id=524901&units=metric&lang=sv&lat=${latitude}&lon=${longitude}&appid=${key}`;
   console.log(apiUrl);
 
   await fetch(apiUrl)
     .then((response) => response.json())
     .then((json) => {
-      myLocation.innerHTML = `${json.city.name}, ${json.city.country}`;
-      temp.innerHTML = `${json.list[0].main.temp}, &#176;<span>C</span>`;
-      weatherDescription.innerHTML = `${json.list[0].weather[0].description}`;
-      weatherIcon.innerHTML = `<img src="http://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="" width="100" height="100" />`;
+      if (myLocation && temp && weatherDescription && weatherIcon != null) {
+        myLocation.innerHTML = `${json.city.name}, ${json.city.country}`;
+        temp.innerHTML = `${json.list[0].main.temp}, &#176;<span>C</span>`;
+        weatherDescription.innerHTML = `${json.list[0].weather[0].description}`;
+        weatherIcon.innerHTML = `<img src="http://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="" width="100" height="100" />`;
+      }
     })
-    .catch((error: string) => {
-      error = 'kunde inte hämta data';
+    .catch((error) => {
       if (errorContainer != null) {
-        errorContainer.innerHTML = error;
+        errorContainer.innerHTML = 'kunde inte hämta data';
       }
       return null;
     });
 }
-function showPosition(position: number) {
-  const latitude: number = position.coords;
-  const longitude: number = position.coords;
+function showPosition(position) {
+  const latitude = position.coords;
+  const longitude = position.coords;
   getWeather(latitude, longitude);
 }
 function getLocation() {
@@ -44,14 +45,14 @@ function getLocation() {
 function checkDaytime() {
   if (currentDate.getHours() < 7 || currentDate.getHours() > 20) {
     if (currentDate.getMonth() > 9 || currentDate.getMonth() < 3) {
-      document.body.style.backgroundImage = 'url(winter-night-time.jpg)';
+      document.body.style.backgroundImage = 'url(background_imgs/winter-night-time.jpg)';
     } else {
-      document.body.style.backgroundImage = 'url(night-time.jpg)';
+      document.body.style.backgroundImage = 'url(background_imgs/night-time.jpg)';
     }
   } else if (currentDate.getMonth() < 9 || currentDate.getMonth() > 3) {
-    document.body.style.backgroundImage = 'url(winter-day-time.jpg)';
+    document.body.style.backgroundImage = 'url(background_imgs/winter-day-time.jpg)';
   } else {
-    document.body.style.backgroundImage = 'url(day-time.jpg)';
+    document.body.style.backgroundImage = 'url(background_imgs/day-time.jpg)';
   }
 }
 

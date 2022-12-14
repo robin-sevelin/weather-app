@@ -1,19 +1,13 @@
 @use 'utils/a11y'; // Om det inte funkar, byt @use mot @import
 @use 'vendor/reset';
 
-:root {
-  // TODO: Går bra att radera kod även här!
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: rem(16px);
-  line-height: 24px;
-  font-weight: 400;
-  color-scheme: light dark;
-  background-color: #242424;
-  font-synthesis: none;
-  text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-size-adjust: 100%;
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
 }
 
 .app {
@@ -21,10 +15,7 @@
   position: relative;
   top: 100px;
   max-width: 600px;
-  background-size: cover;
   background-color: lightblue;
-  background-position: center;
-  background-repeat: no-repeat;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -32,6 +23,7 @@
   align-items: center;
   padding: 20px;
   gap: 20px;
+  opacity: 0.9;
 }
 
 .h1-container {
@@ -58,10 +50,3 @@
   font-size: 2rem;
 }
 
-@media only screen and (max-width: 600px) {
-.app{
-    min-height: 100vh;
-    top: 0;
-    border-radius: 0;
-  }
-}
