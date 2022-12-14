@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import './style/style.scss';
 
 const temp: HTMLDivElement | null = document.querySelector('.weather-temp');
@@ -7,15 +10,14 @@ const weatherIcon: HTMLDivElement | null = document.querySelector('.weather-icon
 const errorContainer: HTMLDivElement | null = document.querySelector('.error-container');
 const currentDate = new Date();
 
-async function getWeather(latitude, longitude) {
-  const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
+async function getWeather(latitude: GeolocationCoordinates, longitude: GeolocationCoordinates) {
+  const key = '7c7d19743c1baaccf38fcdc2f6d1682f';
   const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?id=524901&units=metric&lang=sv&lat=${latitude}&lon=${longitude}&appid=${key}`;
   console.log(apiUrl);
-
   await fetch(apiUrl)
     .then((response) => response.json())
     .then((json) => {
-      if (myLocation && temp && weatherDescription && weatherIcon != null) {
+      if (myLocation != null && temp != null && weatherDescription != null && weatherIcon != null) {
         myLocation.innerHTML = `${json.city.name}, ${json.city.country}`;
         temp.innerHTML = `${json.list[0].main.temp}, &#176;<span>C</span>`;
         weatherDescription.innerHTML = `${json.list[0].weather[0].description}`;
@@ -23,17 +25,16 @@ async function getWeather(latitude, longitude) {
       }
     })
     .catch((error) => {
-      if (errorContainer != null) {
-        errorContainer.innerHTML = 'kunde inte hämta data';
-      }
-      return null;
+      console.error(error);
     });
 }
-function showPosition(position) {
-  const latitude = position.coords;
-  const longitude = position.coords;
+
+function showPosition(position: GeolocationPosition) {
+  const latitude: GeolocationCoordinates = position.coords;
+  const longitude: GeolocationCoordinates = position.coords;
   getWeather(latitude, longitude);
 }
+
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
