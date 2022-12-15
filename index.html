@@ -13,24 +13,32 @@
 
 <body>
   <main>
-    <section class="app" id="app">
-      <div class="h1-container">
-        <h1>Väder App</h1>
+    <div class="error">
+      <p></p>
+    </div>
+    <div class="weather-background">
+      <div class="icon">
+        <img src="/unknown-weather.png" alt="" width="75" height="75" />
       </div>
-      <div class="error-container"></div>
-      <div class="weather-icon" id="weather-icon">
-        <img src="/weather_icons/unknown-weather.png" alt="">
-      </div>
-      <div class="weather-temp" id="weather-temp">
+      <div class="temperature-value">
         <p>- &#176;<span>C</span></p>
       </div>
-      <div class="weather-info" id="weather-description">
-        <p>-</p>
-      </div>
-      <div class="my-location" id="my-location">
-        <p>-</p>
-      </div>
-    </section>
+    </div>
+    <div class="feels-like">
+      <p>-</p>
+    </div>
+    <div class="description">
+      <p>-</p>
+    </div>
+    <div class="wind">
+      <p>-</p>
+    </div>
+    <div class="location">
+      <p>-</p>
+    </div>
+    <div class="local-time">
+      <p>-</p>
+    </div>
   </main>
   <!-- TODO
     - Validera HTML (kopiera den renderade HTML-koden): https://validator.w3.org/#validate_by_input

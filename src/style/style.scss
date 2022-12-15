@@ -4,49 +4,45 @@
 
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  min-height: 100vh;
+  background-color: rgb(152, 174, 196);
+}
+
+main {
+  position: relative;
+  top: 50px;
+  max-width: 500px;
+  background-color: lightblue;
+  margin: auto;
+  font-size: 1.5rem;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.local-time,
+.icon,
+.temperature-value,
+.description,
+.location,
+.wind,
+.feels-like {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.temperature-value {
+  font-size: 5rem;
+}
+
+.weather-background {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh;
-}
-
-.app {
-  margin: auto;
-  position: relative;
-  top: 100px;
-  max-width: 600px;
-  background-color: lightblue;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  gap: 20px;
-  opacity: 0.9;
-}
-
-.h1-container {
-  font-size: 2rem;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.weather-icon,
-.weather-temp {
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 3rem;
-}
-
-.weather-info,
-.my-position {
-  border-radius: 10px;
-  font-size: 2rem;
+  border-radius: 20px 20px 0% 0%;
 }
 
