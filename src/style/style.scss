@@ -8,11 +8,12 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  margin: 10px;
 }
 
 .app {
   position: relative;
-  top: 100px;
+  top: 150px;
   max-width: 500px;
   margin: auto;
   font-size: 1.2rem;
@@ -41,6 +42,14 @@ body {
 
 .temperature-value {
   font-size: 6rem;
+}
+
+.error{
+  display: none;
+}
+
+.hourly-forecast{
+  display: flex;
 }
 
 
