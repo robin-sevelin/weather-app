@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -12,13 +13,12 @@ const errorContainer = document.querySelector('.error');
 const windContainer = document.querySelector('.wind p');
 const feelsLike = document.querySelector('.feels-like p');
 const localTimeContainer = document.querySelector('.local-time');
-const weatherBackground = document.querySelector('.weather-background');
 const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
 const currentDate = new Date();
 
 function getWeather(position: GeolocationPosition) {
   const { latitude, longitude }: GeolocationCoordinates = position.coords;
-  const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?id=524901&units=metric&lang=sv&lat=${latitude}&lon=${longitude}&appid=${key}`;
+  const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?id=524901&units=metric&lang=sv&lat=${latitude}&lon=${longitude}&appid=${key}`;
   fetch(apiUrl)
     .then((response) => response.json())
     .then((json) => {
@@ -27,7 +27,7 @@ function getWeather(position: GeolocationPosition) {
         weatherTemp.innerHTML = `${Math.round(json.list[0].main.temp)} &#176;<span>C</span>`;
         feelsLike.innerHTML = `känns som ${Math.round(json.list[0].main.feels_like)}<span>&#176; C</span>`;
         weatherInfo.innerHTML = json.list[0].weather[0].description;
-        weatherIcon.innerHTML = `<img src="http://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="" width="100" height="100" />`;
+        weatherIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="" width="50" height="50" />`;
         windContainer.innerHTML = `vind ${Math.round(json.list[0].wind.speed)} m/s`;
       }
     })
@@ -51,18 +51,16 @@ function checkDaytime() {
       { hour: '2-digit', minute: '2-digit' },
     );
   }
-  if (weatherBackground != null) {
-    if (currentDate.getHours() < 7 || currentDate.getHours() > 20) {
-      if (currentDate.getMonth() > 9 || currentDate.getMonth() < 3) {
-        weatherBackground.style.backgroundImage = 'url(background_imgs/winter-night-time.jpg)';
-      } else {
-        weatherBackground.style.backgroundImage = 'url(background_imgs/night-time.jpg)';
-      }
-    } else if (currentDate.getMonth() < 9 || currentDate.getMonth() > 3) {
-      weatherBackground.style.backgroundImage = 'url(background_imgs/winter-day-time.jpg)';
+  if (currentDate.getHours() < 7 || currentDate.getHours() > 20) {
+    if (currentDate.getMonth() > 9 || currentDate.getMonth() < 3) {
+      document.body.style.backgroundImage = 'url(background-imgs/winter-night-time.webp)';
     } else {
-      weatherBackground.style.backgroundImage = 'url(background_imgs/day-time.jpg)';
+      document.body.style.backgroundImage = 'url(background-imgs/night-time.webp)';
     }
+  } else if (currentDate.getMonth() < 9 || currentDate.getMonth() > 3) {
+    document.body.style.backgroundImage = 'url(background-imgs/winter-day-time.webp)';
+  } else {
+    document.body.style.backgroundImage = 'url(background-imgs/day-time.webp)';
   }
 }
 
