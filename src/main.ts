@@ -13,13 +13,15 @@ const errorContainer = document.querySelector('.error');
 const windContainer = document.querySelector('.wind p');
 const feelsLike = document.querySelector('.feels-like p');
 const localTimeContainer = document.querySelector('.local-time');
+const dateContainer = document.querySelector('.date');
 const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
 const currentDate = new Date();
 
-function getWeather(position: GeolocationPosition) {
+async function getWeather(position: GeolocationPosition) {
   const { latitude, longitude }: GeolocationCoordinates = position.coords;
   const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?id=524901&units=metric&lang=sv&lat=${latitude}&lon=${longitude}&appid=${key}`;
-  fetch(apiUrl)
+
+  await fetch(apiUrl)
     .then((response) => response.json())
     .then((json) => {
       if (myLocation != null && weatherTemp != null && weatherInfo != null && weatherIcon != null && feelsLike != null && windContainer != null) {
@@ -45,10 +47,13 @@ function getLocation() {
 }
 
 function checkDaytime() {
-  if (localTimeContainer != null) {
+  if (localTimeContainer != null && dateContainer != null) {
+    dateContainer.innerHTML = currentDate.toLocaleDateString();
     localTimeContainer.innerHTML = currentDate.toLocaleTimeString(
       navigator.language,
-      { hour: '2-digit', minute: '2-digit' },
+      {
+        hour: '2-digit', minute: '2-digit',
+      },
     );
   }
   if (currentDate.getHours() < 7 || currentDate.getHours() > 20) {

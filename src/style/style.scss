@@ -18,12 +18,9 @@ body {
   margin: auto;
   font-size: 1.2rem;
   border-radius: 20px;
-  background-color: rgb(37, 35, 35);
+  background-color: rgb(37 35 35);
   opacity: 0.8;
   color: white;
-  box-shadow: rgba(0, 0, 0, 0.25) 0 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0 4px 6px,
-    rgba(0, 0, 0, 0.17) 0 12px 13px, rgba(0, 0, 0, 0.09) 0 -3px 5px;
 }
 
 .local-time,
@@ -32,7 +29,7 @@ body {
 .description,
 .location,
 .wind,
-.feels-like {
+.feels-like, .date {
   margin: auto;
   display: flex;
   flex-direction: column;
