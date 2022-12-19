@@ -1,7 +1,6 @@
 @use 'utils/a11y'; // Om det inte funkar, byt @use mot @import
 @use 'vendor/reset';
 
-
 body {
   font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
@@ -29,7 +28,8 @@ body {
 .description,
 .location,
 .wind,
-.feels-like, .date {
+.feels-like,
+.date {
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -41,9 +41,6 @@ body {
   font-size: 6rem;
 }
 
-.error{
+.error {
   display: none;
 }
-
-
-
