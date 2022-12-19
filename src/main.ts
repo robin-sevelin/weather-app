@@ -9,11 +9,15 @@ const weatherTemp = document.querySelector('.temperature-value p');
 const myLocation = document.querySelector('.location p');
 const weatherInfo = document.querySelector('.description p');
 const weatherIcon = document.querySelector('.icon');
-const errorContainer = document.querySelector('.error');
+const errorContainer = document.querySelector('.error p');
 const windContainer = document.querySelector('.wind p');
 const feelsLike = document.querySelector('.feels-like p');
-const localTimeContainer = document.querySelector('.local-time');
-const dateContainer = document.querySelector('.date');
+const localTimeContainer = document.querySelector('.local-time p');
+const dateContainer = document.querySelector('.date p');
+const winterNightBackground = 'url(background-imgs/winter-night-time.webp)';
+const winterDayBackground = 'url(background-imgs/winter-day-time.webp)';
+const dayBackground = 'url(background-imgs/day-time.webp)';
+const nightBackground = 'url(background-imgs/night-time.webp)';
 const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
 const currentDate = new Date();
 
@@ -33,8 +37,10 @@ async function getWeather(position: GeolocationPosition) {
         windContainer.innerHTML = `vind ${Math.round(json.list[0].wind.speed)} m/s`;
       }
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(() => {
+      if (errorContainer != null) {
+        errorContainer.innerHTML = 'kunde inte hämta data';
+      }
     });
 }
 
@@ -42,7 +48,7 @@ function getLocation() {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(getWeather);
   } else if (errorContainer != null) {
-    errorContainer.innerHTML = 'kunde inte hämta din position';
+    errorContainer.innerHTML = 'kunde inte hämta  data';
   }
 }
 
@@ -56,18 +62,17 @@ function checkDaytime() {
       },
     );
   }
-  if (currentDate.getHours() < 7 || currentDate.getHours() > 20) {
+  if (currentDate.getHours() < 7 || currentDate.getHours() > 18) {
     if (currentDate.getMonth() > 9 || currentDate.getMonth() < 3) {
-      document.body.style.backgroundImage = 'url(background-imgs/winter-night-time.webp)';
+      document.body.style.backgroundImage = winterNightBackground;
     } else {
-      document.body.style.backgroundImage = 'url(background-imgs/night-time.webp)';
+      document.body.style.backgroundImage = nightBackground;
     }
   } else if (currentDate.getMonth() < 9 || currentDate.getMonth() > 3) {
-    document.body.style.backgroundImage = 'url(background-imgs/winter-day-time.webp)';
+    document.body.style.backgroundImage = winterDayBackground;
   } else {
-    document.body.style.backgroundImage = 'url(background-imgs/day-time.webp)';
+    document.body.style.backgroundImage = dayBackground;
   }
 }
-
 checkDaytime();
 getLocation();
