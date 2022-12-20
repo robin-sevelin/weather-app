@@ -7,6 +7,7 @@
 import './style/style.scss';
 
 // containers för sidan
+const findPositionButton = document.querySelector('#get-position');
 const weatherTemp = document.querySelector('.temperature-value p');
 const myLocation = document.querySelector('.location p');
 const weatherInfo = document.querySelector('.description p');
@@ -25,6 +26,19 @@ const nightBackground = 'url(background-imgs/night-time.webp)';
 const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
 // datum variabel
 const currentDate = new Date();
+
+// funktion för att hämta position
+function getLocation() {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(getWeather);
+  } else if (errorContainer !== null) {
+    errorContainer.innerHTML = 'kunde inte hämta  data';
+  }
+}
+
+if (findPositionButton !== null) {
+  findPositionButton.addEventListener('click', getLocation);
+}
 
 // funktion för att hämta och rendera väder data till sina containers
 async function getWeather(position: GeolocationPosition) {
@@ -57,15 +71,6 @@ async function getWeather(position: GeolocationPosition) {
     });
 }
 
-// funktion för att hämta position
-function getLocation() {
-  if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(getWeather);
-  } else if (errorContainer !== null) {
-    errorContainer.innerHTML = 'kunde inte hämta  data';
-  }
-}
-
 // funktion för att hämta klockslag och datum
 function checkDaytime() {
   if (localTimeContainer != null && dateContainer != null) {
@@ -90,4 +95,4 @@ function checkDaytime() {
 // kallar datum funktion
 checkDaytime();
 // kallar position funktion
-getLocation();
+// getLocation();
