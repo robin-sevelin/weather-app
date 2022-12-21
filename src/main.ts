@@ -43,11 +43,12 @@ async function getWeather(position: GeolocationPosition) {
         feelsLike !== null &&
         windContainer !== null
       ) {
+        console.log(json);
         myLocation.innerHTML = `${json.city.name}, ${json.city.country}`;
         weatherTemp.innerHTML = `${Math.round(json.list[0].main.temp)}&#176;<span> C</span>`;
         feelsLike.innerHTML = `känns som ${Math.round(json.list[0].main.feels_like)}<span>&#176; C</span>`;
         weatherInfo.innerHTML = json.list[0].weather[0].description;
-        weatherIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="${json.list[0].weather[0].description}" width="75" height="75" />`;
+        weatherIcon.innerHTML = `<img src="/weather-icons/${json.list[0].weather[0].icon}.png" alt="${json.list[0].weather[0].description}" width="75" height="75" />`;
         windContainer.innerHTML = `vind ${Math.round(json.list[0].wind.speed)} m/s`;
       }
     })
