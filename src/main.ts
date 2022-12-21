@@ -6,39 +6,22 @@
 /* eslint-disable operator-linebreak */
 import './style/style.scss';
 
-// containers för sidan
-const findPositionButton = document.querySelector('#get-position');
-const weatherTemp = document.querySelector('.temperature-value p');
-const myLocation = document.querySelector('.location p');
-const weatherInfo = document.querySelector('.description p');
-const weatherIcon = document.querySelector('.icon');
-const errorContainer = document.querySelector('.error p');
-const windContainer = document.querySelector('.wind p');
-const feelsLike = document.querySelector('.feels-like p');
-const localTimeContainer = document.querySelector('.local-time p');
-const dateContainer = document.querySelector('.date p');
-// bakgrundsbilder
-const winterNightBackground = 'url(background-imgs/winter-night-time.webp)';
+const weatherTemp: HTMLDivElement | null = document.querySelector('.temperature-value p'); // containers för sidan
+const myLocation: HTMLDivElement | null = document.querySelector('.location p');
+const weatherInfo: HTMLDivElement | null = document.querySelector('.description p');
+const weatherIcon: HTMLDivElement | null = document.querySelector('.icon');
+const errorContainer: HTMLDivElement | null = document.querySelector('.error p');
+const windContainer: HTMLDivElement | null = document.querySelector('.wind p');
+const feelsLike: HTMLDivElement | null = document.querySelector('.feels-like p');
+const localTimeContainer: HTMLDivElement | null = document.querySelector('.local-time p');
+const dateContainer: HTMLDivElement | null = document.querySelector('.date p');
+const findPositionButton: HTMLButtonElement | null = document.querySelector('#get-position'); // hitta positions knapp
+const winterNightBackground = 'url(background-imgs/winter-night-time.webp)'; // bakgrundsbilder
 const winterDayBackground = 'url(background-imgs/winter-day-time.webp)';
 const dayBackground = 'url(background-imgs/day-time.webp)';
 const nightBackground = 'url(background-imgs/night-time.webp)';
-// api nyckel
-const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
-// datum variabel
-const currentDate = new Date();
-
-// funktion för att hämta position
-function getLocation() {
-  if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(getWeather);
-  } else if (errorContainer !== null) {
-    errorContainer.innerHTML = 'kunde inte hämta  data';
-  }
-}
-
-if (findPositionButton !== null) {
-  findPositionButton.addEventListener('click', getLocation);
-}
+const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc'; // api nyckel
+const currentDate = new Date(); // datum variabel
 
 // funktion för att hämta och rendera väder data till sina containers
 async function getWeather(position: GeolocationPosition) {
@@ -60,15 +43,30 @@ async function getWeather(position: GeolocationPosition) {
         weatherTemp.innerHTML = `${Math.round(json.list[0].main.temp)}&#176;<span> C</span>`;
         feelsLike.innerHTML = `känns som ${Math.round(json.list[0].main.feels_like)}<span>&#176; C</span>`;
         weatherInfo.innerHTML = json.list[0].weather[0].description;
-        weatherIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="" width="50" height="50" />`;
+        weatherIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="${json.list[0].weather[0].description}" width="100" height="100" />`;
         windContainer.innerHTML = `vind ${Math.round(json.list[0].wind.speed)} m/s`;
       }
     })
     .catch(() => {
       if (errorContainer !== null) {
+        errorContainer.style.display = 'block';
         errorContainer.innerHTML = 'kunde inte hämta data';
       }
     });
+}
+
+// funktion för att hämta position
+function getLocation() {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(getWeather);
+  } else if (errorContainer !== null) {
+    errorContainer.style.display = 'block';
+    errorContainer.innerHTML = 'kunde inte hämta  data';
+  }
+}
+
+if (findPositionButton !== null) {
+  findPositionButton.addEventListener('click', getLocation);
 }
 
 // funktion för att hämta klockslag och datum
@@ -94,5 +92,3 @@ function checkDaytime() {
 }
 // kallar datum funktion
 checkDaytime();
-// kallar position funktion
-// getLocation();
