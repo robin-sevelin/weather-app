@@ -10,7 +10,6 @@ const weatherTemp: HTMLDivElement | null = document.querySelector('.temperature-
 const myLocation: HTMLDivElement | null = document.querySelector('.location p');
 const weatherInfo: HTMLDivElement | null = document.querySelector('.description p');
 const weatherIcon: HTMLDivElement | null = document.querySelector('.icon');
-const errorContainer: HTMLDivElement | null = document.querySelector('.error p');
 const windContainer: HTMLDivElement | null = document.querySelector('.wind p');
 const feelsLike: HTMLDivElement | null = document.querySelector('.feels-like p');
 const localTimeContainer: HTMLDivElement | null = document.querySelector('.local-time p');
@@ -23,6 +22,12 @@ const nightBackground = 'url(background-imgs/night-time.webp)';
 const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc'; // api nyckel
 const currentDate = new Date(); // datum variabel
 
+function showError() {
+  if (myLocation !== null) {
+    myLocation.style.display = 'block';
+    myLocation.innerHTML = 'lyckades inte hämta data';
+  }
+}
 // funktion för att hämta och rendera väder data till sina containers
 async function getWeather(position: GeolocationPosition) {
   const { latitude, longitude }: GeolocationCoordinates = position.coords;
@@ -43,26 +48,16 @@ async function getWeather(position: GeolocationPosition) {
         weatherTemp.innerHTML = `${Math.round(json.list[0].main.temp)}&#176;<span> C</span>`;
         feelsLike.innerHTML = `känns som ${Math.round(json.list[0].main.feels_like)}<span>&#176; C</span>`;
         weatherInfo.innerHTML = json.list[0].weather[0].description;
-        weatherIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="${json.list[0].weather[0].description}" width="100" height="100" />`;
+        weatherIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${json.list[0].weather[0].icon}.png" alt="${json.list[0].weather[0].description}" width="75" height="75" />`;
         windContainer.innerHTML = `vind ${Math.round(json.list[0].wind.speed)} m/s`;
       }
     })
-    .catch((error) => {
-      if (errorContainer !== null) {
-        console.error(error);
-        errorContainer.style.display = 'block';
-        errorContainer.innerHTML = 'kunde inte hämta data';
-      }
-    });
+    .catch(showError);
 }
 
 function getLocation() {
   if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(getWeather);
-  } else if (errorContainer !== null) {
-    console.error('kunde inte hämta  data');
-    errorContainer.style.display = 'block';
-    errorContainer.innerHTML = 'kunde inte hämta position';
+    navigator.geolocation.getCurrentPosition(getWeather, showError);
   }
 }
 
