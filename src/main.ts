@@ -6,25 +6,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import './style/style.scss';
 
-const weatherTemp: HTMLDivElement | null = document.querySelector('.temperature-value p'); // containers för sidan
-const myLocation: HTMLDivElement | null = document.querySelector('.location p');
-const weatherInfo: HTMLDivElement | null = document.querySelector('.description p');
-const weatherIcon: HTMLDivElement | null = document.querySelector('.icon');
-const windContainer: HTMLDivElement | null = document.querySelector('.wind p');
-const feelsLike: HTMLDivElement | null = document.querySelector('.feels-like p');
-const localTimeContainer: HTMLDivElement | null = document.querySelector('.local-time p');
-const dateContainer: HTMLDivElement | null = document.querySelector('.date p');
-const findPositionButton: HTMLButtonElement | null = document.querySelector('#get-position'); // hitta positions knapp
-const winterNightBackground = 'url(background-imgs/winter-night-time.webp)'; // bakgrundsbilder
+const weatherTemp = document.querySelector('.temperature-value p');
+const myLocation = document.querySelector('.location p');
+const weatherInfo = document.querySelector('.description p');
+const weatherIcon = document.querySelector('.icon');
+const windContainer = document.querySelector('.wind p');
+const feelsLike = document.querySelector('.feels-like p');
+const localTimeContainer = document.querySelector('.local-time p');
+const dateContainer = document.querySelector('.date p');
+const findPositionButton = document.querySelector('#get-position');
+const winterNightBackground = 'url(background-imgs/winter-night-time.webp)';
 const winterDayBackground = 'url(background-imgs/winter-day-time.webp)';
 const dayBackground = 'url(background-imgs/day-time.webp)';
 const nightBackground = 'url(background-imgs/night-time.webp)';
-const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc'; // api nyckel
-const currentDate = new Date(); // datum variabel
+const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
+const currentDate = new Date();
 
 function showError() {
   if (myLocation !== null) {
-    myLocation.style.display = 'block';
     myLocation.innerHTML = 'lyckades inte hämta data';
   }
 }
