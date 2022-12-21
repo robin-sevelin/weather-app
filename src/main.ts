@@ -1,9 +1,9 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable operator-linebreak */
 import './style/style.scss';
 
 const weatherTemp: HTMLDivElement | null = document.querySelector('.temperature-value p'); // containers för sidan
@@ -47,21 +47,22 @@ async function getWeather(position: GeolocationPosition) {
         windContainer.innerHTML = `vind ${Math.round(json.list[0].wind.speed)} m/s`;
       }
     })
-    .catch(() => {
+    .catch((error) => {
       if (errorContainer !== null) {
+        console.error(error);
         errorContainer.style.display = 'block';
         errorContainer.innerHTML = 'kunde inte hämta data';
       }
     });
 }
 
-// funktion för att hämta position
 function getLocation() {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(getWeather);
   } else if (errorContainer !== null) {
+    console.error('kunde inte hämta  data');
     errorContainer.style.display = 'block';
-    errorContainer.innerHTML = 'kunde inte hämta  data';
+    errorContainer.innerHTML = 'kunde inte hämta position';
   }
 }
 
@@ -69,15 +70,7 @@ if (findPositionButton !== null) {
   findPositionButton.addEventListener('click', getLocation);
 }
 
-// funktion för att hämta klockslag och datum
-function checkDaytime() {
-  if (localTimeContainer != null && dateContainer != null) {
-    dateContainer.innerHTML = currentDate.toLocaleDateString();
-    localTimeContainer.innerHTML = currentDate.toLocaleTimeString(navigator.language, {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  } // kontrollerar datum och tid
+function renderBackground() {
   if (currentDate.getHours() < 7 || currentDate.getHours() > 18) {
     if (currentDate.getMonth() > 9 || currentDate.getMonth() < 3) {
       document.body.style.backgroundImage = winterNightBackground;
@@ -90,5 +83,16 @@ function checkDaytime() {
     document.body.style.backgroundImage = dayBackground;
   }
 }
-// kallar datum funktion
+
+function checkDaytime() {
+  if (localTimeContainer != null && dateContainer != null) {
+    dateContainer.innerHTML = currentDate.toLocaleDateString();
+    localTimeContainer.innerHTML = currentDate.toLocaleTimeString(navigator.language, {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+  renderBackground();
+}
+
 checkDaytime();
