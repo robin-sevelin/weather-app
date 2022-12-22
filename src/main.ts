@@ -1,9 +1,8 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable operator-linebreak */
 import './style/style.scss';
 
 const weatherTemp = document.querySelector('.temperature-value p');
@@ -22,12 +21,40 @@ const nightBackground = 'url(background-imgs/night-time.webp)';
 const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
 const currentDate = new Date();
 
+const weather = {
+  city: '',
+  country: '',
+  temp: 0,
+  feels_like: 0,
+  description: '',
+  icon: '',
+  wind: 0,
+};
+
+function renderWeather() {
+  if (
+    myLocation !== null &&
+    weatherTemp !== null &&
+    weatherInfo !== null &&
+    weatherIcon !== null &&
+    feelsLike !== null &&
+    windContainer !== null
+  ) {
+    myLocation.innerHTML = `${weather.city}, ${weather.country}`;
+    weatherTemp.innerHTML = `${weather.temp}&#176;<span> C</span>`;
+    feelsLike.innerHTML = `känns som ${weather.feels_like}<span>&#176; C</span>`;
+    weatherInfo.innerHTML = weather.description;
+    weatherIcon.innerHTML = `<img src="/weather-icons/${weather.icon}.png" alt="${weather.description}" width="100" height="100" />`;
+    windContainer.innerHTML = `vind ${weather.wind} m/s`;
+  }
+}
+
 function showError() {
   if (myLocation !== null) {
     myLocation.innerHTML = 'lyckades inte hämta data';
   }
 }
-// funktion för att hämta och rendera väder data till sina containers
+
 async function getWeather(position: GeolocationPosition) {
   const { latitude, longitude }: GeolocationCoordinates = position.coords;
   const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?id=524901&units=metric&lang=sv&lat=${latitude}&lon=${longitude}&appid=${key}`;
@@ -35,22 +62,15 @@ async function getWeather(position: GeolocationPosition) {
   await fetch(apiUrl)
     .then((response) => response.json())
     .then((json) => {
-      if (
-        myLocation !== null &&
-        weatherTemp !== null &&
-        weatherInfo !== null &&
-        weatherIcon !== null &&
-        feelsLike !== null &&
-        windContainer !== null
-      ) {
-        console.log(json);
-        myLocation.innerHTML = `${json.city.name}, ${json.city.country}`;
-        weatherTemp.innerHTML = `${Math.round(json.list[0].main.temp)}&#176;<span> C</span>`;
-        feelsLike.innerHTML = `känns som ${Math.round(json.list[0].main.feels_like)}<span>&#176; C</span>`;
-        weatherInfo.innerHTML = json.list[0].weather[0].description;
-        weatherIcon.innerHTML = `<img src="/weather-icons/${json.list[0].weather[0].icon}.png" alt="${json.list[0].weather[0].description}" width="75" height="75" />`;
-        windContainer.innerHTML = `vind ${Math.round(json.list[0].wind.speed)} m/s`;
-      }
+      weather.city = json.city.name;
+      weather.country = json.city.country;
+      weather.temp = Math.round(json.list[0].main.temp);
+      weather.description = json.list[0].weather[0].description;
+      weather.feels_like = Math.round(json.list[0].main.feels_like);
+      weather.icon = json.list[0].weather[0].icon;
+      weather.wind = Math.round(json.list[0].wind.speed);
+      console.log(weather);
+      renderWeather();
     })
     .catch(showError);
 }
@@ -66,7 +86,7 @@ if (findPositionButton !== null) {
 }
 
 function renderBackground() {
-  if (currentDate.getHours() < 7 || currentDate.getHours() > 18) {
+  if (currentDate.getHours() < 7 || currentDate.getHours() > 17) {
     if (currentDate.getMonth() > 9 || currentDate.getMonth() < 3) {
       document.body.style.backgroundImage = winterNightBackground;
     } else {

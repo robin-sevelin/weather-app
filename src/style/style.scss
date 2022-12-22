@@ -20,6 +20,7 @@ body {
   background-color: rgb(37 35 35);
   opacity: 0.8;
   color: white;
+  box-shadow: black 0 20px 30px -10px;
 }
 
 button {
@@ -28,10 +29,13 @@ button {
   border-radius: 3rem;
   background-color: lightgreen;
   padding: 1rem;
+  box-shadow: black 0 20px 30px -10px;
+  color: black;
 }
 
 button:hover {
-  outline: 1px solid palevioletred;
+  background-color: darkolivegreen;
+  color: white;
 }
 
 .local-time,
