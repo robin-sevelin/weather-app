@@ -31,6 +31,7 @@ button {
   padding: 1rem;
   box-shadow: black 0 20px 30px -10px;
   color: black;
+  transition: 0.3s ease-in-out;
 }
 
 button:hover {
@@ -46,7 +47,8 @@ button:hover {
 .wind,
 .feels-like,
 .date,
-.button-container {
+.button-container,
+.visibility {
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -56,4 +58,10 @@ button:hover {
 
 .temperature-value {
   font-size: 6rem;
+}
+
+.error-container {
+  display: none;
+  text-align: center;
+  padding: 1rem;
 }
