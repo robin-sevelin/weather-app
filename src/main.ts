@@ -50,7 +50,7 @@ function renderWeather() {
     weatherTemp.innerHTML = `${weather.temp}&#176;<span> C</span>`;
     feelsLike.innerHTML = `känns som ${weather.feels_like}<span>&#176; C</span>`;
     weatherInfo.innerHTML = weather.description;
-    weatherIcon.innerHTML = `<img src="/weather-icons/${weather.icon}.png" loading="lay" alt="${weather.description}" width="100" height="100" />`;
+    weatherIcon.innerHTML = `<img src="./weather-icons/${weather.icon}.png" loading="lay" alt="${weather.description}" width="100" height="100" />`;
     windContainer.innerHTML = `vind ${weather.wind} m/s`;
     visibilityContainer.innerHTML = `sikt ${weather.visibility} km`;
   }
