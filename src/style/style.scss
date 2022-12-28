@@ -64,3 +64,17 @@ button:hover {
   text-align: center;
   padding: 1rem;
 }
+
+.forecast-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.three-hour,
+.six-hour,
+.nine-hour {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
