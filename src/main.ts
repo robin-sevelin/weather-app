@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable operator-linebreak */
 import './style/style.scss';
+import weather from './weather';
 
 const forecastThreeHour = document.querySelector('.three-hour');
 const forecastSixHour = document.querySelector('.six-hour');
@@ -21,35 +22,6 @@ const visibilityContainer = document.querySelector('.visibility');
 const findPositionButton = document.querySelector('#get-position');
 const currentDate = new Date();
 const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
-
-const weather = {
-  city: '',
-  country: '',
-  temp: 0,
-  feels_like: 0,
-  description: '',
-  icon: '',
-  wind: 0,
-  visibility: 0,
-};
-
-const forecast = {
-  threeHour: {
-    time: '',
-    temp: 0,
-    icon: '',
-  },
-  sixHour: {
-    time: '',
-    temp: 0,
-    icon: '',
-  },
-  nineHour: {
-    time: '',
-    temp: 0,
-    icon: '',
-  },
-};
 
 const backgrounds = {
   winterNightBackground: 'url(background-imgs/winter-night-time.webp)',
@@ -71,22 +43,22 @@ function renderWeather() {
     forecastSixHour !== null &&
     forecastNineHour !== null
   ) {
-    myLocation.innerHTML = `${weather.city}, ${weather.country}`;
-    weatherTemp.innerHTML = `${weather.temp}&#176;<span> C</span>`;
-    feelsLike.innerHTML = `känns som ${weather.feels_like}<span>&#176; C</span>`;
-    weatherInfo.innerHTML = weather.description;
-    weatherIcon.innerHTML = `<img src="./weather-icons/${weather.icon}.png" loading="lay" alt="${weather.description}" width="100" height="100" />`;
-    windContainer.innerHTML = `vind ${weather.wind} m/s`;
-    visibilityContainer.innerHTML = `sikt ${weather.visibility} km`;
-    forecastThreeHour.innerHTML = `<p>${forecast.threeHour.time}</p>
-    <img src="./weather-icons/${forecast.threeHour.icon}.png" loading="lay" alt="${weather.description}" width="50" height="50" />
-    <p>${forecast.threeHour.temp}&#176;<span> C</span></p>`;
-    forecastSixHour.innerHTML = `<p>${forecast.sixHour.time}</p>
-    <img src="./weather-icons/${forecast.sixHour.icon}.png" loading="lay" alt="${weather.description}" width="50" height="50" />
-    <p>${forecast.sixHour.temp}&#176;<span> C</span></p>`;
-    forecastNineHour.innerHTML = `<p>${forecast.nineHour.time}</p>
-    <img src="./weather-icons/${forecast.nineHour.icon}.png" loading="lay" alt="${weather.description}" width="50" height="50" />
-    <p>${forecast.nineHour.temp}&#176;<span> C</span></p>`;
+    myLocation.innerHTML = `${weather.current.city}, ${weather.current.country}`;
+    weatherTemp.innerHTML = `${weather.current.temp}&#176;<span> C</span>`;
+    feelsLike.innerHTML = `känns som ${weather.current.feels_like}<span>&#176; C</span>`;
+    weatherInfo.innerHTML = weather.current.description;
+    weatherIcon.innerHTML = `<img src="./weather-icons/${weather.current.icon}.png" loading="lay" alt="${weather.current.description}" width="100" height="100" />`;
+    windContainer.innerHTML = `vind ${weather.current.wind} m/s`;
+    visibilityContainer.innerHTML = `sikt ${weather.current.visibility} km`;
+    forecastThreeHour.innerHTML = `<p>${weather.forecast.threeHour.time}</p>
+    <img src="./weather-icons/${weather.forecast.threeHour.icon}.png" loading="lay" alt="" width="30" height="30" />
+    <p>${weather.forecast.threeHour.temp}&#176;<span> C</span></p>`;
+    forecastSixHour.innerHTML = `<p>${weather.forecast.sixHour.time}</p>
+    <img src="./weather-icons/${weather.forecast.sixHour.icon}.png" loading="lay" alt="" width="30" height="30" />
+    <p>${weather.forecast.sixHour.temp}&#176;<span> C</span></p>`;
+    forecastNineHour.innerHTML = `<p>${weather.forecast.nineHour.time}</p>
+    <img src="./weather-icons/${weather.forecast.nineHour.icon}.png" loading="lay" alt="" width="30" height="30" />
+    <p>${weather.forecast.nineHour.temp}&#176;<span> C</span></p>`;
   }
 }
 
@@ -104,34 +76,34 @@ async function getWeather(position: GeolocationPosition) {
   await fetch(apiUrl)
     .then((response) => response.json())
     .then((json) => {
-      weather.city = json.city.name;
-      weather.country = json.city.country;
-      weather.temp = Math.round(json.list[0].main.temp);
-      weather.description = json.list[0].weather[0].description;
-      weather.feels_like = Math.round(json.list[0].main.feels_like);
-      weather.icon = json.list[0].weather[0].icon;
-      weather.wind = Math.round(json.list[0].wind.speed);
-      weather.visibility = Math.round(json.list[0].visibility / 1000);
+      weather.current.city = json.city.name;
+      weather.current.country = json.city.country;
+      weather.current.temp = Math.round(json.list[0].main.temp);
+      weather.current.description = json.list[0].weather[0].description;
+      weather.current.feels_like = Math.round(json.list[0].main.feels_like);
+      weather.current.icon = json.list[0].weather[0].icon;
+      weather.current.wind = Math.round(json.list[0].wind.speed);
+      weather.current.visibility = Math.round(json.list[0].visibility / 1000);
 
-      forecast.threeHour.time = new Date(json.list[0].dt * 1000).toLocaleTimeString(navigator.language, {
+      weather.forecast.threeHour.time = new Date(json.list[0].dt * 1000).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
         minute: '2-digit',
       });
-      forecast.threeHour.temp = Math.round(json.list[1].main.temp);
-      forecast.threeHour.icon = json.list[1].weather[0].icon;
-      forecast.sixHour.time = new Date(json.list[1].dt * 1000).toLocaleTimeString(navigator.language, {
+      weather.forecast.threeHour.temp = Math.round(json.list[1].main.temp);
+      weather.forecast.threeHour.icon = json.list[1].weather[0].icon;
+      weather.forecast.sixHour.time = new Date(json.list[1].dt * 1000).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
         minute: '2-digit',
       });
-      forecast.sixHour.temp = Math.round(json.list[2].main.temp);
-      forecast.sixHour.icon = json.list[2].weather[0].icon;
+      weather.forecast.sixHour.temp = Math.round(json.list[2].main.temp);
+      weather.forecast.sixHour.icon = json.list[2].weather[0].icon;
 
-      forecast.nineHour.time = new Date(json.list[2].dt * 1000).toLocaleTimeString(navigator.language, {
+      weather.forecast.nineHour.time = new Date(json.list[2].dt * 1000).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
         minute: '2-digit',
       });
-      forecast.nineHour.temp = Math.round(json.list[3].main.temp);
-      forecast.nineHour.icon = json.list[3].weather[0].icon;
+      weather.forecast.nineHour.temp = Math.round(json.list[3].main.temp);
+      weather.forecast.nineHour.icon = json.list[3].weather[0].icon;
       renderWeather();
     })
     .catch(showError);
