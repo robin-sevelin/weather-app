@@ -6,9 +6,8 @@
 import './style/style.scss';
 import weather from './weather';
 
-const forecastThreeHour = document.querySelector('.three-hour');
-const forecastSixHour = document.querySelector('.six-hour');
-const forecastNineHour = document.querySelector('.nine-hour');
+const currentDate = new Date();
+const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
 const errorContainer = document.querySelector('.error-container') as HTMLElement;
 const weatherTemp = document.querySelector('.temperature-value p');
 const myLocation = document.querySelector('.location p');
@@ -19,9 +18,10 @@ const feelsLike = document.querySelector('.feels-like p');
 const localTimeContainer = document.querySelector('.local-time p');
 const dateContainer = document.querySelector('.date p');
 const visibilityContainer = document.querySelector('.visibility');
+const forecastThreeHour = document.querySelector('.three-hour');
+const forecastSixHour = document.querySelector('.six-hour');
+const forecastNineHour = document.querySelector('.nine-hour');
 const findPositionButton = document.querySelector('#get-position');
-const currentDate = new Date();
-const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
 
 function renderWeather() {
   if (
@@ -44,13 +44,13 @@ function renderWeather() {
     windContainer.innerHTML = `vind ${weather.current.wind} m/s`;
     visibilityContainer.innerHTML = `sikt ${weather.current.visibility} km`;
     forecastThreeHour.innerHTML = `<p>${weather.forecast.threeHour.time}</p>
-    <img src="./weather-icons/${weather.forecast.threeHour.icon}.png" loading="lay" alt="" width="30" height="30" />
+    <img src="./weather-icons/${weather.forecast.threeHour.icon}.png" loading="lazy" alt="${weather.forecast.threeHour.description}" width="30" height="30" />
     <p>${weather.forecast.threeHour.temp}&#176;<span> C</span></p>`;
     forecastSixHour.innerHTML = `<p>${weather.forecast.sixHour.time}</p>
-    <img src="./weather-icons/${weather.forecast.sixHour.icon}.png" loading="lay" alt="" width="30" height="30" />
+    <img src="./weather-icons/${weather.forecast.sixHour.icon}.png" loading="lazy" alt="${weather.forecast.sixHour.description}" width="30" height="30" />
     <p>${weather.forecast.sixHour.temp}&#176;<span> C</span></p>`;
     forecastNineHour.innerHTML = `<p>${weather.forecast.nineHour.time}</p>
-    <img src="./weather-icons/${weather.forecast.nineHour.icon}.png" loading="lay" alt="" width="30" height="30" />
+    <img src="./weather-icons/${weather.forecast.nineHour.icon}.png" loading="lazy" alt="${weather.forecast.threeHour.description}" width="30" height="30" />
     <p>${weather.forecast.nineHour.temp}&#176;<span> C</span></p>`;
   }
 }
@@ -83,19 +83,21 @@ async function getWeather(position: GeolocationPosition) {
         minute: '2-digit',
       });
       weather.forecast.threeHour.temp = Math.round(json.list[1].main.temp);
+      weather.forecast.threeHour.description = json.list[1].weather[0].description;
       weather.forecast.threeHour.icon = json.list[1].weather[0].icon;
       weather.forecast.sixHour.time = new Date(json.list[1].dt * 1000).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
         minute: '2-digit',
       });
       weather.forecast.sixHour.temp = Math.round(json.list[2].main.temp);
+      weather.forecast.threeHour.description = json.list[2].weather[0].description;
       weather.forecast.sixHour.icon = json.list[2].weather[0].icon;
-
       weather.forecast.nineHour.time = new Date(json.list[2].dt * 1000).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
         minute: '2-digit',
       });
       weather.forecast.nineHour.temp = Math.round(json.list[3].main.temp);
+      weather.forecast.threeHour.description = json.list[3].weather[0].description;
       weather.forecast.nineHour.icon = json.list[3].weather[0].icon;
       renderWeather();
     })

@@ -13,16 +13,19 @@ const weather = {
   forecast: {
     threeHour: {
       time: '',
+      description: '',
       temp: 0,
       icon: '',
     },
     sixHour: {
       time: '',
+      description: '',
       temp: 0,
       icon: '',
     },
     nineHour: {
       time: '',
+      description: '',
       temp: 0,
       icon: '',
     },
