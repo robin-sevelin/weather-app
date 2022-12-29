@@ -112,20 +112,21 @@ async function getWeather(position: GeolocationPosition) {
       weather.icon = json.list[0].weather[0].icon;
       weather.wind = Math.round(json.list[0].wind.speed);
       weather.visibility = Math.round(json.list[0].visibility / 1000);
-      forecast.threeHour.time = new Date(1672261200 * 1000).toLocaleTimeString(navigator.language, {
+
+      forecast.threeHour.time = new Date(json.list[0].dt * 1000).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
         minute: '2-digit',
       });
       forecast.threeHour.temp = Math.round(json.list[1].main.temp);
       forecast.threeHour.icon = json.list[1].weather[0].icon;
-      forecast.sixHour.time = new Date(1672272000 * 1000).toLocaleTimeString(navigator.language, {
+      forecast.sixHour.time = new Date(json.list[1].dt * 1000).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
         minute: '2-digit',
       });
       forecast.sixHour.temp = Math.round(json.list[2].main.temp);
       forecast.sixHour.icon = json.list[2].weather[0].icon;
 
-      forecast.nineHour.time = new Date(1672282800 * 1000).toLocaleTimeString(navigator.language, {
+      forecast.nineHour.time = new Date(json.list[2].dt * 1000).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
         minute: '2-digit',
       });
