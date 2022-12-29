@@ -23,13 +23,6 @@ const findPositionButton = document.querySelector('#get-position');
 const currentDate = new Date();
 const key = 'bf8a6a9e6c78c59cdb9e6c5aa6b2eccc';
 
-const backgrounds = {
-  winterNightBackground: 'url(background-imgs/winter-night-time.webp)',
-  winterDayBackground: 'url(background-imgs/winter-day-time.webp)',
-  dayBackground: 'url(background-imgs/day-time.webp)',
-  nightBackground: 'url(background-imgs/night-time.webp)',
-};
-
 function renderWeather() {
   if (
     myLocation !== null &&
@@ -122,14 +115,14 @@ if (findPositionButton !== null) {
 function renderBackground() {
   if (currentDate.getHours() < 7 || currentDate.getHours() > 17) {
     if (currentDate.getMonth() > 9 || currentDate.getMonth() < 3) {
-      document.body.style.backgroundImage = backgrounds.winterNightBackground;
+      document.body.style.backgroundImage = weather.backgrounds.winterNightBackground;
     } else {
-      document.body.style.backgroundImage = backgrounds.nightBackground;
+      document.body.style.backgroundImage = weather.backgrounds.nightBackground;
     }
   } else if (currentDate.getMonth() < 9 || currentDate.getMonth() > 3) {
-    document.body.style.backgroundImage = backgrounds.winterDayBackground;
+    document.body.style.backgroundImage = weather.backgrounds.winterDayBackground;
   } else {
-    document.body.style.backgroundImage = backgrounds.dayBackground;
+    document.body.style.backgroundImage = weather.backgrounds.dayBackground;
   }
 }
 

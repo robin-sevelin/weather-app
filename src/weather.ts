@@ -27,6 +27,12 @@ const weather = {
       icon: '',
     },
   },
+  backgrounds: {
+    winterNightBackground: 'url(background-imgs/winter-night-time.webp)',
+    winterDayBackground: 'url(background-imgs/winter-day-time.webp)',
+    dayBackground: 'url(background-imgs/day-time.webp)',
+    nightBackground: 'url(background-imgs/night-time.webp)',
+  },
 };
 
 export default weather;
