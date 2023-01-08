@@ -76,7 +76,7 @@ async function getWeather(position: GeolocationPosition) {
       weather.current.feels_like = Math.round(json.list[0].main.feels_like);
       weather.current.icon = json.list[0].weather[0].icon;
       weather.current.wind = Math.round(json.list[0].wind.speed);
-      weather.current.visibility = json.list[0].visibility / 10;
+      weather.current.visibility = json.list[0].visibility / 1000;
 
       weather.forecast.threeHour.time = new Date(json.list[0].dt * 1000).toLocaleTimeString(navigator.language, {
         hour: '2-digit',
