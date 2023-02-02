@@ -8,7 +8,7 @@ Detta projekt är en väder app som använder webbläsarens inbyggda funktion f�
 
 ## Demo
 
-[https://github.com/Medieinstitutet/fed22d-js-grundkurs-2-weather-app-robin-sevelin](https://medieinstitutet.github.io/fed22d-js-grundkurs-2-weather-app-robin-sevelin/)
+[[https://github.com/Medieinstitutet/fed22d-js-grundkurs-2-weather-app-robin-sevelin]](https://robin-sevelin.github.io/weather-app/)
 
 ## Documentation
 
