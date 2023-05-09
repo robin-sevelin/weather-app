@@ -121,7 +121,7 @@ function renderBackground() {
     } else {
       document.body.style.backgroundImage = weather.backgrounds.nightBackground;
     }
-  } else if (currentDate.getMonth() < 9 || currentDate.getMonth() > 3) {
+  } else if (currentDate.getMonth() < 9 && currentDate.getMonth() < 3) {
     document.body.style.backgroundImage = weather.backgrounds.winterDayBackground;
   } else {
     document.body.style.backgroundImage = weather.backgrounds.dayBackground;
